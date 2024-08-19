@@ -9,7 +9,7 @@ import chatRouter from "./routes/chat.js";
 const app = express();
 // Allow any origin for now (change for production)
 // Configure middleware
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "https://onrender.com" }));
 app.use(express.json()); // Parse incoming JSON data
 app.use(authRouter);
 app.use(chatRouter); // MongoDB connection (replace with your connection string)
