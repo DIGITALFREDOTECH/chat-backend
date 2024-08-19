@@ -3,9 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 import Message from "./models/Message.js";
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: { origin: "https://chat-frontend-ten-zeta.vercel.app" },
-});
+const io = new Server(server);
 io.on("connection", (socket) => {
   // ...
   socket.on("join_room", (roomId) => {
