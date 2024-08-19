@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import Message from "./models/Message.js";
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "https://chat-frontend-ten-zeta.vercel.app" },
+  cors: { origin: ["https://chat-frontend-ten-zeta.vercel.app", "*"] },
 });
 io.on("connection", (socket) => {
   // ...
