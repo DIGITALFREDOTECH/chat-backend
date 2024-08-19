@@ -16,6 +16,10 @@ declare global {
   }
 }
 
+authRouter.get("/", async (req: Request, res: Response) => {
+  res.send({message:"we are ok "});
+})
+
 authRouter.post("/register", async (req: Request, res: Response) => {
   const { email, password, full_name } = req.body;
   console.log(req.body);

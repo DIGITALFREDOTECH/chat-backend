@@ -1,6 +1,7 @@
 import express from "express";
 import ChatRoom from "../models/ChatRoom.js";
 import { authMiddleware } from "../middleware/auth.js";
+import Message from "../models/Message.js";
 const chatRouter = express.Router();
 chatRouter.use(authMiddleware);
 chatRouter.post("/create", async (req, res) => {
@@ -23,8 +24,24 @@ chatRouter.post("/create", async (req, res) => {
 chatRouter.get("/joined", async (req, res) => {
     //   const { userId } = req.user; // Access user ID from req.user
     try {
-        const joinedRooms = await ChatRoom.find({ users: { $in: [req.user._id] } }); // Find rooms with user ID
+        const joinedRooms = await ChatRoom.find({
+            users: { $in: [req.user._id] },
+        }).sort({ timestamp: 1 }); // Find rooms with user ID
         res.send(joinedRooms);
+    }
+    catch (error) {
+        res.status(500).send(error);
+        console.error(error); // Log the error for debugging
+    }
+});
+chatRouter.get("/messages/:room_id", async (req, res) => {
+    const { room_id } = req.params;
+    try {
+        const messages = await Message.find({ roomId: room_id }).sort({
+            timestamp: 1,
+        }); // Find rooms with user ID
+        const room = await ChatRoom.findById(room_id);
+        res.send({ messages, room });
     }
     catch (error) {
         res.status(500).send(error);

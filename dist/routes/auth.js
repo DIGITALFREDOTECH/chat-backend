@@ -5,6 +5,9 @@ import { authMiddleware } from "../middleware/auth.js";
 import { configDotenv } from "dotenv";
 configDotenv();
 const authRouter = express.Router();
+authRouter.get("/", async (req, res) => {
+    res.send({ message: "we are ok " });
+});
 authRouter.post("/register", async (req, res) => {
     const { email, password, full_name } = req.body;
     console.log(req.body);
