@@ -28,14 +28,16 @@ authRouter.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
+
+        console.log(user)
         if (!user) {
-            return res.status(401).send({
+            return res.status(401).json({
                 error: "Invalid credentials",
             });
         }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            return res.status(401).send({ error: "Invalid credentials" });
+            return res.status(401).json({ error: "Invalid credentials" });
         }
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
         res.send({ user, token });
